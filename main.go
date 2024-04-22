@@ -1,9 +1,9 @@
 package main
 
-// import (
-// 	"fmt"
-// 	"net/http"
-// )
+import (
+	"fmt"
+	"net/http"
+)
 
 type Storage interface {
 	Get(id int) (any, error)
@@ -27,7 +27,12 @@ func main() {
 	s := &Server{
 		store: &FooStorage{},
 	}
-	s.store.Get(1)
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello woorld")
+		s.store.Get(1)
+	})
+	http.ListenAndServe(":9090", nil)
 
 }
 
