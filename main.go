@@ -27,12 +27,13 @@ func main() {
 	s := &Server{
 		store: &FooStorage{},
 	}
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello woorld")
-		s.store.Get(1)
-	})
+	s.store.Get(1)
+	http.HandleFunc("/", handleprint)
 	http.ListenAndServe(":9090", nil)
+
+}
+func handleprint(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello woorld")
 
 }
 
